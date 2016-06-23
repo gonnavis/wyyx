@@ -1,0 +1,13 @@
+
+<div id="session" style="position:relative;">
+
+	<div ng-repeat="msg in msgs" ng-class="{fl:msg.flow=='in',fr:msg.flow=='out'}" style="clear:both;">
+		{{msg.text}}
+	</div>
+
+	<div class="inputs" style="position:fixed;bottom:0;right:0;">
+		<input type="text" ng-model="m.input">
+		<button ng-click="send()">发送</button>
+	</div>
+
+</div>

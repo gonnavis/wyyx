@@ -1,0 +1,3 @@
+
+var painong={};
+painong.scope={};

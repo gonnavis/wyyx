@@ -1,0 +1,6 @@
+
+<div id="sessions">
+	<a ng-repeat="session in data.sessions" href="#/session?account={{session.to}}" style="display:block;">
+		{{session.to}} {{session.lastMsg.text}} {{session.lastMsg.timeString}}
+	</a>
+</div>

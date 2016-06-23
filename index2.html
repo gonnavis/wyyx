@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+<body>
+    <script src="lib/wyyx/Web_SDK_Base_v2.4.0.js"></script>
+    <script src="lib/wyyx/Web_SDK_NIM_v2.4.0.js"></script>
+    <!-- <script src="path/to/Web_SDK_Chatroom_v.js"></script> -->
+
+    <script type="text/javascript">
+
+		var data = {};
+		var nim = NIM.getInstance({
+		    // debug: true,
+		    appKey: '6b745cf1e3082a06c8a2ffdb731844c7',
+		    account: 'test2',
+		    token: 'zzzzzz',
+		    onconnect: onConnect,
+		    onwillreconnect: onWillReconnect,
+		    ondisconnect: onDisconnect,
+		    onerror: onError,
+    		onsyncdone: onSyncDone,
+		    onroamingmsgs: onRoamingMsgs,
+		    onofflinemsgs: onOfflineMsgs,
+		    onmsg: onMsg,
+		    onsessions: onSessions,
+		    onupdatesession: onUpdateSession,
+		});
+		function onConnect() {
+		    console.log('连接成功');
+		}
+		function onWillReconnect(obj) {
+		    // 此时说明 SDK 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
+		    console.log('即将重连');
+		    console.log(obj.retryCount);
+		    console.log(obj.duration);
+		}
+		function onDisconnect(error) {
+		    // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
+		    console.log('丢失连接');
+		    console.log(error);
+		    if (error) {
+		        switch (error.code) {
+		        // 账号或者密码错误, 请跳转到登录页面并提示错误
+		        case 302:
+		            break;
+		        // 被踢, 请提示错误后跳转到登录页面
+		        case 'kicked':
+		            break;
+		        default:
+		            break;
+		        }
+		    }
+		}
+		function onError(error) {
+		    console.log(error);
+		}
+		function onSyncDone() {
+		    console.log('同步完成');
+
+		}
+
+		function onRoamingMsgs(obj) {
+		    console.log('收到漫游消息', obj);
+		    pushMsg(obj.msgs);
+		}
+		function onOfflineMsgs(obj) {
+		    console.log('收到离线消息', obj);
+		    pushMsg(obj.msgs);
+		}
+		function onMsg(msg) {
+		    console.log('收到消息', msg.scene, msg.type, msg);
+		    pushMsg(msg);
+		    switch (msg.type) {
+		    case 'custom':
+		        onCustomMsg(msg);
+		        break;
+		    case 'notification':
+		        // 处理群通知消息
+		        onTeamNotificationMsg(msg);
+		        break;
+		    default:
+		        break;
+		    }
+		}
+		function pushMsg(msgs) {
+		    if (!Array.isArray(msgs)) { msgs = [msgs]; }
+		    var sessionId = msgs[0].sessionId;
+		    data.msgs = data.msgs || {};
+		    data.msgs[sessionId] = nim.mergeMsgs(data.msgs[sessionId], msgs);
+		}
+		function onCustomMsg(msg) {
+		    // 处理自定义消息
+		}
+		
+		function onSessions(sessions) {
+		    console.log('收到会话列表', sessions);
+		    data.sessions = nim.mergeSessions(data.sessions, sessions);
+		    updateSessionsUI();
+		}
+		function onUpdateSession(session) {
+		    console.log('会话更新了', session);
+		    data.sessions = nim.mergeSessions(data.sessions, session);
+		    updateSessionsUI();
+		}
+		function updateSessionsUI() {
+		    // 刷新界面
+		}
+
+
+
+    </script>
+</body>
+</html>
