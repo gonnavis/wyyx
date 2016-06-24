@@ -78,8 +78,16 @@ angular.module('starter.services', [])
 		    onupdatesession: onUpdateSession,
 		    onroamingmsgs: onRoamingMsgs,
 		    onofflinemsgs: onOfflineMsgs,
-		    onmsg: onMsg
+		    onmsg: onMsg,
+    		onsyncdone: onSyncDone,
 		});
+	}
+	
+	im.ev.onSyncDone=function(){};
+	function onSyncDone() {
+		console.info('onSyncDone');
+	    console.log('同步完成');
+	    im.ev.onSyncDone();
 	}
 
 	im.ev.onConnect=function(){};

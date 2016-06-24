@@ -38,6 +38,10 @@ angular.module('starter.controllers', [])
 		console.log('session');
 		console.log(session);
 	}
+	// im.ev.onSyncDone=function(){
+	// 	$s.data=im.data;
+	// 	$s.$apply();
+	// }
 })
 //***********************************************************************************************************************************************************************************************************************************************
 .controller('sessionCtrl', function($scope,pn,im,$location) {
