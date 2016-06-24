@@ -60,21 +60,38 @@ angular.module('starter.controllers', [])
 		$s.$apply();
 	}
 
+	$s.test=function(){
+		console.error('test');
+	}
+
+	$s.scrollToBottom=function(){
+		setTimeout(function(){
+			document.getElementById('session').scrollTop=document.getElementById('session').scrollHeight;
+		},0)
+	}
+
 	$s.send=function(){
 		im.fn.sendText($s.account,$s.m.input);
 		$s.m.input='';
 	}
 	im.ev.onUpdateSession=function(session){
-
+		$s.scrollToBottom();
 	}
 	im.ev.sendMsgDone=function(error, msg){
 		if(!error){
 			$s.msgs.push(msg);
 			$s.$apply();
+			$s.scrollToBottom();
+				
 		}
 	}
 	im.ev.onMsg=function( msg){
 		$s.msgs.push(msg);
 		$s.$apply();
+		$s.scrollToBottom();
+	}
+
+	$s.sendFile=function(){
+		im.fn.sendFile($s.account,'fileInput');
 	}
 })

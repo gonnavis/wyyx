@@ -1,11 +1,18 @@
 
-<div id="session" style="position:relative;">
+<div id="session" style="position:relative;height:80vh;overflow:scroll;">
 
 	<div ng-repeat="msg in msgs" ng-class="{fl:msg.flow=='in',fr:msg.flow=='out'}" style="clear:both;">
-		{{msg.text}}
+		<div ng-if="msg.type=='text'">
+			{{msg.text}}
+		</div>
+		<div ng-if="msg.type=='image'">
+			<img ng-src="{{msg.file.url}}" img-load="scrollToBottom()">
+		</div>
 	</div>
 
 	<div class="inputs" style="position:fixed;bottom:0;right:0;">
+		<input id="fileInput" type="file" >
+		<button ng-click="sendFile()">发送图片</button>
 		<input type="text" ng-model="m.input">
 		<button ng-click="send()">发送</button>
 	</div>

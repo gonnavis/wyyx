@@ -242,6 +242,39 @@ angular.module('starter.services', [])
 	    im.ev.getHistoryMsgsDone(error, obj);
 	}
 
+	im.fn.sendFile=function(account,fileInput){
+		nim.sendFile({
+		    scene: 'p2p',
+		    to: account,
+		    type: 'image',
+		    fileInput: fileInput,
+		    beginupload: beginUpload,
+		    uploadprogress: uploadProgress,
+		    uploaddone: uploadDone,
+		    beforesend: beforeSend,
+		    done: sendMsgDone
+		});
+	}
+	function beginUpload(upload) {
+        // - 如果开发者传入 fileInput, 在此回调之前不能修改 fileInput
+        // - 在此回调之后可以取消图片上传, 此回调会接收一个参数 `upload`, 调用 `upload.abort();` 来取消文件上传
+    }
+    function uploadProgress(obj) {
+        console.log('文件总大小: ' + obj.total + 'bytes');
+        console.log('已经上传的大小: ' + obj.loaded + 'bytes');
+        console.log('上传进度: ' + obj.percentage);
+        console.log('上传进度文本: ' + obj.percentageText);
+    }
+    function uploadDone(error, file) {
+        console.log(error);
+        console.log(file);
+        console.log('上传' + (!error?'成功':'失败'));
+    }
+    function beforeSend(msg) {
+        console.log('正在发送p2p image消息, id=' + msg.idClient);
+        pushMsg(msg);
+    }
+
 	im.data=data;
 	im.nim=nim;
 	im.pm=pm;
