@@ -61,6 +61,7 @@ angular.module('starter.services', [])
 	im.fn={};
 
 	var data = {};
+	var pm={};
 	var nim;
 
 	im.ev={};
@@ -82,7 +83,7 @@ angular.module('starter.services', [])
     		onsyncdone: onSyncDone,
 		});
 	}
-	
+
 	im.ev.onSyncDone=function(){};
 	function onSyncDone() {
 		console.info('onSyncDone');
@@ -242,7 +243,8 @@ angular.module('starter.services', [])
 	}
 
 	im.data=data;
-	im.nim=nim
+	im.nim=nim;
+	im.pm=pm;
 
 	return im;
 

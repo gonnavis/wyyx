@@ -14,6 +14,7 @@ angular.module('starter.controllers', [])
 		im.fn.login($s.m.account,$s.m.password);
 	}
 	im.ev.onConnect=function(){
+		im.pm.account=$s.m.account;
 		location='#/sessions';
 	}
 	im.ev.onDisconnect=function(error){
@@ -27,6 +28,8 @@ angular.module('starter.controllers', [])
 	painong.scope.sessions=$s;
 	$s.data=im.data;
 	$s.m={};
+
+	$s.$parent.title=im.pm.account;
 
 	im.ev.onSessions=function(sessions){
 		console.log('sessions');
@@ -50,6 +53,7 @@ angular.module('starter.controllers', [])
 	$s.m={};
 
 	$s.account=$location.search().account;
+	$s.$parent.title=$s.account;
 	im.fn.getHistoryMsgs($s.account);
 	im.ev.getHistoryMsgsDone=function(error, obj){
 		$s.msgs=obj.msgs.reverse();
