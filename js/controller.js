@@ -58,6 +58,7 @@ angular.module('starter.controllers', [])
 	im.ev.getHistoryMsgsDone=function(error, obj){
 		$s.msgs=obj.msgs.reverse();
 		$s.$apply();
+		$s.scrollToBottom();
 	}
 
 	$s.test=function(){
