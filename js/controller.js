@@ -25,6 +25,8 @@ angular.module('starter.controllers', [])
 .controller('sessionsCtrl', function($scope,pn,im) {
 	var $s=$scope;
 	painong.scope.sessions=$s;
+	$s.data=im.data;
+	$s.m={};
 
 	im.ev.onSessions=function(sessions){
 		console.log('sessions');

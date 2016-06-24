@@ -139,6 +139,7 @@ angular.module('starter.services', [])
 	function onUpdateSession(session) {
 		console.info('onUpdateSession');
 	    console.log('会话更新了', session);
+		session.lastMsg.timeStr=new Date(session.lastMsg.time).toString();
 	    data.sessions = nim.mergeSessions(data.sessions, session);
 	    updateSessionsUI();
 	    im.ev.onUpdateSession(session);

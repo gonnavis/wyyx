@@ -3,4 +3,9 @@
 	<a ng-repeat="session in data.sessions" href="#/session?account={{session.to}}" style="display:block;">
 		{{session.to}} {{session.lastMsg.text}} {{session.lastMsg.timeStr}}
 	</a>
+	<br>
+	<div ng-init="m.account='test'" >
+		和<input type="text" ng-model="m.account" >对话
+		<a href="#/session?account={{m.account}}">确定</a>
+	</div>
 </div>
