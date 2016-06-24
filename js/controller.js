@@ -60,4 +60,8 @@ angular.module('starter.controllers', [])
 			$s.$apply();
 		}
 	}
+	im.ev.onMsg=function( msg){
+		$s.msgs.push(msg);
+		$s.$apply();
+	}
 })
