@@ -13,9 +13,11 @@ angular.module('starter.controllers', [])
 	$s.login=function(){
 		im.fn.login($s.m.account,$s.m.password);
 	}
-
 	im.ev.onConnect=function(){
 		location='#/sessions';
+	}
+	im.ev.onDisconnect=function(error){
+		alert(error.message);
 	}
 
 })
@@ -50,6 +52,7 @@ angular.module('starter.controllers', [])
 
 	$s.send=function(){
 		im.fn.sendText($s.account,$s.m.input);
+		$s.m.input='';
 	}
 	im.ev.onUpdateSession=function(session){
 
