@@ -5,6 +5,7 @@ angular.module('starter', [
 	'starter.directives',
 	'ngRoute',
 	'ngCookies',
+	'ngSanitize',
 ])
 
 .run(function($route) {

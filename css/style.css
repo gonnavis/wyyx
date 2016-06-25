@@ -2,3 +2,13 @@
 /*all*/
 	.fl{float: left;}
 	.fr{float: right;}
+
+/*session*/
+	#session{position:relative;height:80vh;overflow:scroll;}
+	#session .msg{clear:both;}
+	#session .inputs{position:fixed;bottom:0;right:0;}
+	#session .emojiWrap{float:right;position:relative;}
+	#session .emojiBtn{cursor:pointer;}
+	#session .emojis{position:absolute;width:315px;height:315px;bottom:30px;right:0;overflow-y:scroll;background:white;}
+	#session .emoji{float:left;cursor:pointer;}
+	#session .emoji img{max-width:32px;max-height:32px;}

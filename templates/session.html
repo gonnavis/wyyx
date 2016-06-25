@@ -1,19 +1,26 @@
 
-<div id="session" style="position:relative;height:80vh;overflow:scroll;">
+<div id="session" style="">
 
-	<div ng-repeat="msg in msgs" ng-class="{fl:msg.flow=='in',fr:msg.flow=='out'}" style="clear:both;">
-		<div ng-if="msg.type=='text'">
-			{{msg.text}}
+	<div class="msg" ng-repeat="msg in msgs" ng-class="{fl:msg.flow=='in',fr:msg.flow=='out'}" style="">
+		<div ng-if="msg.type=='text'" ng-bind-html="msg.text">
 		</div>
 		<div ng-if="msg.type=='image'">
 			<img ng-src="{{msg.file.url}}" img-load="scrollToBottom()">
 		</div>
 	</div>
 
-	<div class="inputs" style="position:fixed;bottom:0;right:0;">
+	<div class="inputs" style="">
+		<div class="emojiWrap" ng-init="isShowEmojis=false" style="">
+			<div class="emojiBtn" ng-click="isShowEmojis=!isShowEmojis">表情</div>
+			<div class="emojis" ng-show="isShowEmojis" style="">
+				<div class="emoji" ng-repeat="emoji in emojis" ng-click="emojiClick()">
+					<img ng-src="img/emoji/{{emoji.file}}">
+				</div>
+			</div>
+		</div>
 		<input id="fileInput" type="file" >
 		<button ng-click="sendFile()">发送图片</button>
-		<input type="text" ng-model="m.input">
+		<input type="text" ng-model="m.input" ng-init="m.input=''">
 		<button ng-click="send()">发送</button>
 	</div>
 

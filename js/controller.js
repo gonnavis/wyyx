@@ -56,6 +56,11 @@ angular.module('starter.controllers', [])
 	$s.$parent.title=$s.account;
 	im.fn.getHistoryMsgs($s.account);
 	im.ev.getHistoryMsgsDone=function(error, obj){
+		for(var i=0;i<obj.msgs.length;i++){
+			if(obj.msgs[i].type=='text'){
+				obj.msgs[i].text=buildEmoji(obj.msgs[i].text);
+			}
+		}
 		$s.msgs=obj.msgs.reverse();
 		$s.$apply();
 		$s.scrollToBottom();
@@ -80,13 +85,29 @@ angular.module('starter.controllers', [])
 	}
 	im.ev.sendMsgDone=function(error, msg){
 		if(!error){
+			if(msg.type=='text'){
+				msg.text=buildEmoji(msg.text);
+			}
 			$s.msgs.push(msg);
 			$s.$apply();
 			$s.scrollToBottom();
 				
 		}
 	}
+	function buildEmoji(text) {
+		var re = /\[([^\]\[]*)\]/g;
+		var matches = text.match(re) || [];
+		for (var j = 0, len = matches.length; j < len; ++j) {
+			if(emoji[matches[j]]){
+				text = text.replace(matches[j], '<img src="img/emoji/' + emoji[matches[j]].file + '" />');
+			}		
+		}
+		return text;
+	}
 	im.ev.onMsg=function( msg){
+		if(msg.type=='text'){
+			msg.text=buildEmoji(msg.text);
+		}
 		$s.msgs.push(msg);
 		$s.$apply();
 		$s.scrollToBottom();
@@ -94,5 +115,13 @@ angular.module('starter.controllers', [])
 
 	$s.sendFile=function(){
 		im.fn.sendFile($s.account,'fileInput');
+	}
+
+	$s.emojis=emoji;
+	$s.emojiClick=function(){
+		// console.log(this.emoji);
+		// $s.m.input+=Object.keys(this.emoji)[0];
+		$s.m.input+=this.emoji.name;
+		$s.isShowEmojis=false;
 	}
 })
