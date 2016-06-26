@@ -2,7 +2,8 @@
 <div id="session" style="">
 
 	<div class="msg" ng-repeat="msg in msgs" ng-class="{fl:msg.flow=='in',fr:msg.flow=='out'}" style="">
-		<div ng-if="msg.type=='text'" ng-bind-html="msg.text">
+		<div class="msgText" ng-if="msg.type=='text'">
+			{{msg.text}}
 		</div>
 		<div ng-if="msg.type=='image'">
 			<img ng-src="{{msg.file.url}}" img-load="scrollToBottom()">

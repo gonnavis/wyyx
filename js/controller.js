@@ -56,14 +56,18 @@ angular.module('starter.controllers', [])
 	$s.$parent.title=$s.account;
 	im.fn.getHistoryMsgs($s.account);
 	im.ev.getHistoryMsgsDone=function(error, obj){
-		for(var i=0;i<obj.msgs.length;i++){
-			if(obj.msgs[i].type=='text'){
-				obj.msgs[i].text=buildEmoji(obj.msgs[i].text);
-			}
-		}
+		// for(var i=0;i<obj.msgs.length;i++){
+		// 	if(obj.msgs[i].type=='text'){
+		// 		debugger;
+		// 		obj.msgs[i].text=buildEmoji(obj.msgs[i].text);
+		// 	}
+		// }
 		$s.msgs=obj.msgs.reverse();
 		$s.$apply();
 		$s.scrollToBottom();
+		jq('#session .msgText').each(function(){
+			buildEmojiJq(jq(this));
+		});
 	}
 
 	$s.test=function(){
@@ -85,11 +89,12 @@ angular.module('starter.controllers', [])
 	}
 	im.ev.sendMsgDone=function(error, msg){
 		if(!error){
-			if(msg.type=='text'){
-				msg.text=buildEmoji(msg.text);
-			}
 			$s.msgs.push(msg);
 			$s.$apply();
+			if(msg.type=='text'){
+				// msg.text=buildEmoji(msg.text);
+				buildEmojiJq(jq('#session .msgText').last());
+			}
 			$s.scrollToBottom();
 				
 		}
@@ -104,12 +109,22 @@ angular.module('starter.controllers', [])
 		}
 		return text;
 	}
-	im.ev.onMsg=function( msg){
-		if(msg.type=='text'){
-			msg.text=buildEmoji(msg.text);
+	function buildEmojiJq(jqText) {
+		var re = /\[([^\]\[]*)\]/g;
+		var matches = jqText.html().match(re) || [];
+		for (var j = 0, len = matches.length; j < len; ++j) {
+			if(emoji[matches[j]]){
+				jqText.html(jqText.html().replace(matches[j], '<img src="img/emoji/' + emoji[matches[j]].file + '" />'));
+			}		
 		}
+	}
+	im.ev.onMsg=function( msg){
 		$s.msgs.push(msg);
 		$s.$apply();
+		if(msg.type=='text'){
+			// msg.text=buildEmoji(msg.text);
+			buildEmojiJq(jq('#session .msgText').last());
+		}
 		$s.scrollToBottom();
 	}
 
